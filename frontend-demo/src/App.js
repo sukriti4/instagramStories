@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import stories from "./data/userList";
+import StoriesList from "./components/stories-list";
+import styled from "styled-components";
+import ViewStory from "./components/view-story";
 
+const InstagramWrapper = styled.section`
+  display: flex;
+  max-width: 100%;
+  width: 420px;
+  flex-direction: column;
+  margin: 0 auto;
+`
 function App() {
+  // console.log("userData", userData);
+  const [selectedStoryIndex, setSelectedStoryIndex] = useState(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <InstagramWrapper className="app-wrapper">
+      <h1 className="app-title">Instagram Stories</h1>
+
+      <StoriesList
+        stories={stories}
+        onStorySelect={(index) => setSelectedStoryIndex(index)}
+      />
+
+      {selectedStoryIndex !== null && (
+        <ViewStory
+          stories={stories}
+          initialIndex={selectedStoryIndex}
+          onClose={() => setSelectedStoryIndex(null)}
+        />
+      )}
+    </InstagramWrapper>
   );
 }
 
